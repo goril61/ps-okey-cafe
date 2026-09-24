@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0d12">
+<title>GORİL PS OKEY - Masa Yönetimi</title>
+<style>
+:root{--bg:#090b10;--panel:#11151d;--panel2:#171c25;--line:#252c38;--text:#f4f6f8;--muted:#929baa;--green:#20d477;--red:#ff4d5f;--yellow:#ffc857;--blue:#4da3ff}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#080a0e,#10151d);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif}
+header{padding:18px 22px;border-bottom:1px solid var(--line);background:#0c0f15cc;backdrop-filter:blur(10px);position:sticky;top:0;z-index:10}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#20d477,#0b8d4b);display:grid;place-items:center;font-size:25px;box-shadow:0 8px 25px #20d47725}.brand h1{font-size:19px;margin:0}.brand small{color:var(--muted)}
+.container{max-width:1250px;margin:auto;padding:20px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}.stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}.stat span{color:var(--muted);font-size:13px}.stat strong{display:block;font-size:24px;margin-top:7px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}.toolbar button,.toolbar select{background:var(--panel2);color:var(--text);border:1px solid var(--line);padding:11px 14px;border-radius:11px;font-weight:600;cursor:pointer}
+.toolbar button:hover{border-color:#3a4454}.primary{background:var(--green)!important;color:#06130b!important;border:0!important}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.table{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:16px;min-height:225px;position:relative;overflow:hidden}.table.active{border-color:#20d47766;box-shadow:0 0 0 1px #20d47718 inset}.table.expired{border-color:#ff4d5f88}.top{display:flex;justify-content:space-between;align-items:center}.name{font-size:17px;font-weight:800}.status{font-size:11px;padding:5px 8px;border-radius:20px;background:#202632;color:var(--muted)}.active .status{background:#123a28;color:var(--green)}.expired .status{background:#401b21;color:#ff8994}.time{font-size:30px;font-weight:800;margin:20px 0 5px;letter-spacing:1px}.sub{color:var(--muted);font-size:12px;min-height:17px}.price{font-size:18px;font-weight:800;margin-top:9px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:15px}.actions button{border:0;border-radius:9px;padding:9px;background:#202631;color:var(--text);font-weight:700;cursor:pointer}.actions .start{background:var(--green);color:#06130b}.actions .stop{background:#3a2024;color:#ff9ca5}.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:40px}
+.modal{position:fixed;inset:0;background:#000b;display:none;place-items:center;z-index:20;padding:20px}.modal.show{display:grid}.box{width:min(440px,100%);background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px}.box h2{margin-top:0}.field{margin:12px 0}.field label{display:block;color:var(--muted);font-size:13px;margin-bottom:6px}.field input,.field select{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#0c1016;color:var(--text);font-size:15px}.modal-actions{display:flex;gap:8px;margin-top:18px}.modal-actions button{flex:1;padding:12px;border-radius:10px;border:0;font-weight:800;cursor:pointer}.cancel{background:#252b35;color:white}.save{background:var(--green)}
+.toast{position:fixed;right:18px;bottom:18px;background:#171c25;border:1px solid var(--line);padding:13px 16px;border-radius:12px;display:none;z-index:30}.toast.show{display:block}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}@media(max-width:550px){.container{padding:13px}.grid{grid-template-columns:1fr}.stats{gap:8px}.stat{padding:12px}.stat strong{font-size:20px}}
+</style>
+</head>
+<body>
+<header><div class="brand"><div class="logo">🦍</div><div><h1>GORİL PS OKEY</h1><small>Masa & süre yönetim sistemi</small></div></div></header>
+<main class="container">
+<section class="stats">
+<div class="stat"><span>Toplam Masa</span><strong id="total">12</strong></div>
+<div class="stat"><span>Aktif Masa</span><strong id="active">0</strong></div>
+<div class="stat"><span>Boş Masa</span><strong id="free">12</strong></div>
+<div class="stat"><span>Bugünkü Ciro</span><strong id="revenue">₺0</strong></div>
+</section>
+<div class="toolbar">
+<button class="primary" onclick="openModal()">＋ Yeni Oturum</button>
+<button onclick="addTable()">＋ Masa Ekle</button>
+<button onclick="clearFinished()">Tamamlananları Temizle</button>
+<select id="filter" onchange="render()"><option value="all">Tüm Masalar</option><option value="active">Aktif Masalar</option><option value="free">Boş Masalar</option></select>
+</div>
+<section class="grid" id="grid"></section>
+</main>
+<div class="modal" id="modal">
+<div class="box">
+<h2>Yeni Oturum Başlat</h2>
+<div class="field"><label>Masa</label><select id="tableSelect"></select></div>
+<div class="field"><label>Müşteri / Not</label><input id="customer" placeholder="Örn. Ahmet - 4 kişi"></div>
+<div class="field"><label>Süre</label><select id="duration"><option value="30">30 dakika</option><option value="60" selected>1 saat</option><option value="120">2 saat</option><option value="180">3 saat</option><option value="240">4 saat</option><option value="0">Süresiz</option></select></div>
+<div class="field"><label>Saatlik ücret (₺)</label><input id="rate" type="number" min="0" value="100"></div>
+<div class="modal-actions"><button class="cancel" onclick="closeModal()">İptal</button><button class="save" onclick="startSession()">Oturumu Başlat</button></div>
+</div></div>
+<div class="toast" id="toast"></div>
+<script>
+const KEY="goril_ps_okey_v1";
+let data=JSON.parse(localStorage.getItem(KEY)||"null")||{tables:Array.from({length:12},(_,i)=>({id:i+1,session:null})),revenue:0};
+function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+function money(n){return "₺"+Number(n||0).toLocaleString("tr-TR",{minimumFractionDigits:0,maximumFractionDigits:2})}
+function fmt(ms){if(ms<=0)return "00:00:00";let s=Math.floor(ms/1000),h=Math.floor(s/3600);s%=3600;let m=Math.floor(s/60);s%=60;return [h,m,s].map((x,i)=>String(x).padStart(2,"0")).join(":")}
+function render(){
+ const filter=document.getElementById("filter").value, grid=document.getElementById("grid");grid.innerHTML="";
+ let active=0;
+ data.tables.forEach(t=>{if(t.session)active++});
+ data.tables.filter(t=>filter==="all"||(filter==="active"&&t.session)||(filter==="free"&&!t.session)).forEach(t=>{
+  const s=t.session, left=s?(s.end? s.end-Date.now():1):0, expired=s&&s.end&&left<=0;
+  const el=document.createElement("article");el.className="table "+(s?"active ":"")+(expired?"expired":"");
+  const elapsed=s?Date.now()-s.start:0; const charge=s?Math.max(0,(elapsed/3600000)*s.rate):0;
+  el.innerHTML=`<div class="top"><div class="name">Masa ${t.id}</div><div class="status">${!s?"BOŞ":expired?"SÜRE DOLDU":"AKTİF"}</div></div>
+  <div class="time">${s?fmt(left):"00:00:00"}</div><div class="sub">${s?(s.customer||"Müşteri notu yok"):"Oturum başlatılmaya hazır"}</div>
+  <div class="price">${s?money(charge):"—"}</div>
+  <div class="actions">${s?`<button onclick="addTime(${t.id},30)">+30 dk</button><button class="stop" onclick="stopSession(${t.id})">Bitir</button>`:`<button class="start" onclick="openModal(${t.id})">Başlat</button><button onclick="renameTable(${t.id})">Masa Adı</button>`}</div>`;
+  grid.appendChild(el);
+ });
+ document.getElementById("total").textContent=data.tables.length;
+ document.getElementById("active").textContent=active;
+ document.getElementById("free").textContent=data.tables.length-active;
+ document.getElementById("revenue").textContent=money(data.revenue);
+}
+function openModal(id){document.getElementById("modal").classList.add("show");let sel=document.getElementById("tableSelect");sel.innerHTML=data.tables.filter(t=>!t.session).map(t=>`<option value="${t.id}" ${t.id===id?"selected":""}>Masa ${t.id}</option>`).join("");if(id)sel.value=id}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+function startSession(){let id=+document.getElementById("tableSelect").value,t=data.tables.find(x=>x.id===id);if(!t)return;let min=+document.getElementById("duration").value,rate=+document.getElementById("rate").value||0;t.session={start:Date.now(),end:min?Date.now()+min*60000:0,rate,customer:document.getElementById("customer").value.trim()};save();closeModal();toast("Masa "+id+" başlatıldı.");render()}
+function stopSession(id){let t=data.tables.find(x=>x.id===id);if(!t?.session)return;let s=t.session,elapsed=Math.max(0,Date.now()-s.start),charge=(elapsed/3600000)*s.rate;data.revenue+=charge;t.session=null;save();toast("Oturum bitirildi: "+money(charge));render()}
+function addTime(id,min){let t=data.tables.find(x=>x.id===id);if(t?.session){t.session.end=(t.session.end||Date.now())+min*60000;save();toast("30 dakika eklendi.");render()}}
+function addTable(){data.tables.push({id:data.tables.length+1,session:null});save();render();toast("Yeni masa eklendi.")}
+function renameTable(id){let n=prompt("Masa adı:", "Masa "+id);if(n){let t=data.tables.find(x=>x.id===id);t.custom=n;save();render()}}
+function clearFinished(){if(confirm("Tamamlanan masa kayıtlarını temizle?")){data.tables.forEach(t=>{if(t.finished)t.finished=false});save();render()}}
+function toast(x){let e=document.getElementById("toast");e.textContent=x;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),2200)}
+setInterval(render,1000);render();
+</script>
+</body>
+</html>
