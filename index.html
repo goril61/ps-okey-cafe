@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GORİL Cafe & PS Manager PRO</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#080d18;color:#eef3fa;font-family:Inter,Arial,sans-serif}button,input,select,textarea{font:inherit}button{border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer}.app{display:flex;min-height:100vh}.side{width:245px;background:#101827;padding:17px;position:fixed;top:0;bottom:0;overflow:auto}.logo{font-size:22px;font-weight:900;margin-bottom:20px}.logo span{color:#ffb000}.nav button{width:100%;display:block;text-align:left;background:transparent;color:#a9b7cb;margin:3px 0}.nav button.active,.nav button:hover{background:#24334e;color:#fff}.main{margin-left:245px;width:calc(100% - 245px);padding:20px}main{margin-left:245px;width:calc(100% - 245px);padding:20px;min-width:0;overflow-x:hidden}.page{display:none}.page.active{display:block}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.muted{color:#91a0b7}.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:11px}.card{background:#131d30;border:1px solid #293954;border-radius:14px;padding:14px;margin-bottom:11px}.stat b{font-size:24px;display:block;margin-top:5px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.row{display:flex;justify-content:space-between;align-items:center;gap:8px}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.primary{background:#ffb000;color:#111}.green{background:#35d07f;color:#07140c}.danger{background:#ff596d;color:#fff}.dark{background:#293750;color:#fff}.purple{background:#8d70ff;color:#fff}.badge{display:inline-block;border-radius:20px;padding:5px 8px;background:#293750;font-size:12px}.ok{background:#123e2b;color:#70eaa5}.warn{background:#49370e;color:#ffd46b}.bad{background:#501b25;color:#ff8391}.field label{display:block;color:#93a2b8;font-size:13px;margin-bottom:5px}.field input,.field select,.field textarea{width:100%;padding:10px;background:#0b1423;color:#fff;border:1px solid #34445f;border-radius:8px}.field textarea{min-height:75px}.menu{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.product{background:#0e1728;border:1px solid #2a3a55;border-radius:12px;padding:13px}.price{font-size:18px;font-weight:900}.tablex{width:100%;border-collapse:collapse}.tablex th,.tablex td{padding:9px;border-bottom:1px solid #2a3852;text-align:left}.modal{display:none;position:fixed;inset:0;background:#000c;align-items:center;justify-content:center;padding:15px;z-index:30}.modal.show{display:flex}.sheet{width:min(800px,100%);max-height:90vh;overflow:auto;background:#111b2d;border:1px solid #31415e;border-radius:16px;padding:18px}.toast{position:fixed;right:15px;bottom:15px;background:#1e2d47;border:1px solid #435574;padding:12px;border-radius:10px;display:none;z-index:50}.toast.show{display:block}.kpi{font-size:12px;color:#92a1b7}.timeline{border-left:3px solid #ffb000;padding-left:12px}.qrbox{background:white;color:#111;padding:18px;text-align:center;border-radius:12px}.fakeqr{font:9px/8px monospace;word-break:break-all}.timer{font-size:21px;font-weight:900}.positive{color:#69e6a0}.negative{color:#ff7180}
+html,body{min-width:0;overflow-x:hidden}.main,main{min-width:0}.page{width:100%;max-width:1600px;margin:0 auto}
+.card,.product,.sheet{min-width:0;overflow-wrap:anywhere}.cards>*{min-width:0}.grid>*{min-width:0}
+h1,h2,h3,p{overflow-wrap:anywhere}
+@media(max-width:950px){.side{width:72px;padding:9px}.logo{font-size:0}.logo span{font-size:20px}.nav button{font-size:0;text-align:center}.nav button:first-letter{font-size:19px}.main{margin-left:72px;width:calc(100% - 72px)}.cards{grid-template-columns:repeat(2,1fr)}.grid,.grid3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.side{top:auto;bottom:0;left:0;right:0;width:100%;height:64px;z-index:20}.nav{display:flex;justify-content:space-around}.nav button{margin:0;padding:8px}.main{margin:0;width:100%;padding:12px 12px 80px}.cards,.grid,.grid2,.grid3,.menu{grid-template-columns:1fr}.top h1{font-size:20px}}
+</style>
+<style id="v3css">
+.v3grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.v3card{padding:15px;border:1px solid #303746;border-radius:14px;background:#171b24}
+.v3card b{font-size:23px;display:block;margin-top:4px}.v3list{display:flex;flex-direction:column;gap:8px}
+.v3row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px;border:1px solid #303746;border-radius:10px}
+.v3tabs{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0 15px}.v3tabs button{padding:8px 12px;border-radius:9px}
+</style></head>
+<body>
+<div class="app">
+<aside class="side"><div class="logo">GORİL <span>PRO</span></div><div class="nav">
+<button class="active" onclick="go('dashboard',this)">🏠 Panel</button>
+<button onclick="go('tables',this)">🪑 Masalar</button><button onclick="go('ps',this)">🎮 PS Sistem</button>
+<button onclick="go('qr',this)">📱 QR Menü</button><button onclick="go('kitchen',this)">👨‍🍳 Mutfak</button>
+<button onclick="go('orders',this)">🧾 Siparişler</button><button onclick="go('stock',this)">📦 Stok</button>
+<button onclick="go('customers',this)">👥 Müşteri</button><button onclick="go('cash',this)">💰 Kasa</button>
+<button onclick="go('reports',this)">📊 Rapor</button><button onclick="go('staff',this)">🔐 Personel</button>
+<button onclick="go('settings',this)">⚙️ Ayarlar</button>
+</div></aside>
+<main>
+<section id="dashboard" class="page active"><div class="top"><div><h1>GORİL Yönetici Paneli</h1><div class="muted">Cafe + PS Cafe + QR işletme merkezi</div></div><div class="actions"><button class="primary" onclick="newOrder()">+ Sipariş</button><button class="purple" onclick="newPS()">+ PS Oturumu</button></div></div><div class="cards" id="stats"></div><div id="dashAlerts"></div><div class="grid" id="dashTables"></div></section>
+
+<section id="tables" class="page"><div class="top"><div><h1>Masa Yönetimi</h1><div class="muted">Saatlik ücret + adisyon + rezervasyon</div></div><div class="field" style="min-width:150px"><label>₺ / saat</label><input id="rateTop" type="number" onchange="setRate(this.value)"></div></div><div class="grid" id="tablesGrid"></div></section>
+
+<section id="ps" class="page"><div class="top"><div><h1>🎮 PS Cafe Yönetimi</h1><div class="muted">Cihaz bazlı süre ve ücret</div></div><button class="primary" onclick="newPS()">+ Oturum Başlat</button></div><div class="cards" id="psStats"></div><div class="grid" id="psGrid"></div></section>
+
+<section id="qr" class="page"><div class="top"><div><h1>📱 QR Müşteri Menüsü</h1><div class="muted">Müşteri → sipariş → mutfak → masa → kasa</div></div><button class="primary" onclick="qrLinks()">QR Masaları</button></div><div class="card"><div class="field"><label>Test masası</label><select id="qrTable" onchange="renderQR()"></select></div></div><div class="menu" id="menu"></div><div class="card"><div class="row"><b id="cartCount">0 ürün</b><b id="cartTotal">₺0</b></div><div class="actions"><button class="green" onclick="sendQR()">Siparişi Gönder</button><button class="dark" onclick="clearCart()">Sepeti Temizle</button></div></div></section>
+
+<section id="kitchen" class="page"><div class="top"><div><h1>👨‍🍳 Mutfak Ekranı</h1><div class="muted">Yeni → Hazırlanıyor → Hazır → Teslim</div></div></div><div id="kitchenList"></div></section>
+
+<section id="orders" class="page"><div class="top"><div><h1>🧾 Sipariş & Adisyon</h1><div class="muted">QR ve garson siparişleri</div></div><button class="primary" onclick="newOrder()">+ Garson Siparişi</button></div><div id="ordersList"></div></section>
+
+<section id="stock" class="page"><div class="top"><div><h1>📦 Stok & Maliyet</h1><div class="muted">Stok giriş/çıkış, kritik seviye, maliyet</div></div><button class="primary" onclick="newProduct()">+ Ürün</button></div><div class="card"><table class="tablex"><thead><tr><th>Ürün</th><th>Stok</th><th>Kritik</th><th>Alış</th><th>Satış</th><th>Kâr</th><th>İşlem</th></tr></thead><tbody id="stockList"></tbody></table></div></section>
+
+<section id="customers" class="page"><div class="top"><div><h1>👥 Müşteri & Sadakat</h1><div class="muted">Puan, ziyaret, VIP ve indirim</div></div><button class="primary" onclick="newCustomer()">+ Müşteri</button></div><div class="card"><table class="tablex"><thead><tr><th>Ad</th><th>Telefon</th><th>Ziyaret</th><th>Puan</th><th>VIP</th><th>İndirim</th><th></th></tr></thead><tbody id="customerList"></tbody></table></div></section>
+
+<section id="cash" class="page"><div class="top"><div><h1>💰 Kasa</h1><div class="muted">Nakit, kart, giriş, çıkış ve gün sonu</div></div><div class="actions"><button class="green" onclick="cashMove('Giriş')">+ Giriş</button><button class="danger" onclick="cashMove('Çıkış')">- Çıkış</button></div></div><div class="cards" id="cashStats"></div><div class="card"><table class="tablex"><thead><tr><th>Saat</th><th>İşlem</th><th>Açıklama</th><th>Tutar</th></tr></thead><tbody id="cashList"></tbody></table></div></section>
+
+<section id="reports" class="page"><div class="top"><div><h1>📊 Rapor Merkezi</h1><div class="muted">Ciro, kâr, masa, PS ve ödeme analizi</div></div><button class="primary" onclick="downloadReport()">Raporu Kaydet</button></div><div class="cards" id="reportStats"></div><div class="grid2"><div class="card"><h3>Ödeme Dağılımı</h3><div id="paymentReport"></div></div><div class="card"><h3>En Çok Satanlar</h3><div id="bestReport"></div></div></div><div class="card"><h3>Dönem</h3><div class="actions"><button class="dark" onclick="period='Günlük';render()">Günlük</button><button class="dark" onclick="period='Haftalık';render()">Haftalık</button><button class="dark" onclick="period='Aylık';render()">Aylık</button><button class="dark" onclick="period='Yıllık';render()">Yıllık</button></div><p id="periodText"></p></div></section>
+
+<section id="staff" class="page"><div class="top"><div><h1>🔐 Personel & Yetki</h1><div class="muted">Yönetici / Garson / Kasa / Mutfak</div></div><button class="primary" onclick="newStaff()">+ Personel</button></div><div class="card"><table class="tablex"><thead><tr><th>Ad</th><th>Rol</th><th>Durum</th></tr></thead><tbody id="staffList"></tbody></table></div></section>
+
+<section id="settings" class="page"><div class="top"><div><h1>⚙️ Ayarlar</h1><div class="muted">İşletme ve prototip ayarları</div></div></div><div class="cards"><div class="card"><h3>Varsayılan Masa Saatlik Ücret</h3><p class="muted">Her masada ayrıca farklı ücret belirleyebilirsin.</p><div class="field"><label>TL / saat</label><input id="rateSet" type="number"></div><button class="primary" onclick="saveRate()">Kaydet</button></div><div class="card"><h3>PS Saatlik Ücret</h3><div class="field"><label>TL / saat</label><input id="psRate" type="number"></div><button class="primary" onclick="savePSRate()">Kaydet</button></div><div class="card"><h3>İndirim Kuralları</h3><p class="muted">5 ziyaret %5 • 10 ziyaret %10 • 20 ziyaret %15 • 30 ziyaret %20</p></div><div class="card"><h3>Demo</h3><button class="danger" onclick="resetAll()">Tüm Veriyi Sıfırla</button></div></div></section>
+</main></div>
+<div id="modal" class="modal"><div id="sheet" class="sheet"></div></div><div id="toast" class="toast"></div>
+<script>
+const KEY='goril_pro_v2';
+const seed={rate:120,psRate:180,tables:Array.from({length:12},(_,i)=>({id:i+1,open:false,start:null,orders:[],reserved:false})),devices:Array.from({length:8},(_,i)=>({id:i+1,name:'PS '+(i+1),open:false,start:null,rate:180,customer:''})),products:[{id:1,n:'Çay',buy:4,sell:15,stock:100,critical:20,cat:'İçecek'},{id:2,n:'Kola',buy:20,sell:50,stock:40,critical:10,cat:'İçecek'},{id:3,n:'Su',buy:4,sell:10,stock:80,critical:15,cat:'İçecek'},{id:4,n:'Tost',buy:35,sell:90,stock:30,critical:5,cat:'Yiyecek'},{id:5,n:'Pizza',buy:70,sell:160,stock:20,critical:4,cat:'Yiyecek'},{id:6,n:'Patates',buy:25,sell:75,stock:20,critical:5,cat:'Atıştırmalık'}],orders:[],customers:[],cash:[],staff:[{id:1,name:'Yönetici',role:'Yönetici',active:true},{id:2,name:'Garson 1',role:'Garson',active:true},{id:3,name:'Kasa 1',role:'Kasa',active:true},{id:4,name:'Mutfak 1',role:'Mutfak',active:true}],cart:[]};
+let db=JSON.parse(localStorage.getItem(KEY)||'null')||seed,period='Günlük';
+const $=id=>document.getElementById(id);function normalizeData(){
+  db.tables.forEach(t=>{if(typeof t.rate!=='number') t.rate=db.rate||120; if(typeof t.limitMinutes!=='number') t.limitMinutes=0;});
+  db.devices.forEach(d=>{if(typeof d.rate!=='number') d.rate=db.psRate||180;});
+}
+normalizeData();
+function save(){localStorage.setItem(KEY,JSON.stringify(db));render()}function money(n){return Number(n||0).toLocaleString('tr-TR',{style:'currency',currency:'TRY'})}
+function go(id,b){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');render()}
+function openM(s){$('sheet').innerHTML=s;$('modal').classList.add('show')}function closeM(){$('modal').classList.remove('show')}
+function toast(s){let x=$('toast');x.textContent=s;x.classList.add('show');setTimeout(()=>x.classList.remove('show'),1700)}
+function setRate(v){db.rate=Math.max(0,+v||0);save();toast('Masa ücreti güncellendi')}function saveRate(){setRate($('rateSet').value)}
+function savePSRate(){db.psRate=Math.max(0,+$('psRate').value||0);db.devices.forEach(d=>d.rate=db.psRate);save();toast('PS ücreti güncellendi')}
+function elapsed(t){return t?Math.max(0,Date.now()-t):0}function hours(t){return elapsed(t)/3600000}
+function tableCalc(t){
+ let fee=t.open?hours(t.start)*(Number(t.rate)||0):0;
+ let orders=t.orders.reduce((s,id)=>s+(db.orders.find(o=>o.id===id)?.total||0),0);
+ return{fee,orders,total:fee+orders}
+}
+function openTable(id){
+ let t=db.tables.find(x=>x.id===id);
+ if(t.open)return;
+ openM(`<h2>Masa ${id} Aç</h2>
+ <div class="grid2">
+  <div class="field"><label>Saatlik ücret (TL)</label><input id="tableRate" type="number" min="0" step="1" value="${Number(t.rate)||Number(db.rate)||120}"></div>
+  <div class="field"><label>Otomatik kapanma (dakika) — 0 = kapalı</label><input id="tableLimit" type="number" min="0" step="5" value="${Number(t.limitMinutes)||0}"></div>
+ </div>
+ <p class="muted">Ücret geçen süreye göre otomatik hesaplanacak.</p>
+ <div class="actions"><button class="primary" onclick="confirmOpenTable(${id})">Masayı Başlat</button><button class="dark" onclick="closeM()">İptal</button></div>`)
+}
+function confirmOpenTable(id){
+ let t=db.tables.find(x=>x.id===id);
+ t.rate=Math.max(0,Number($('tableRate').value)||0);
+ t.limitMinutes=Math.max(0,Number($('tableLimit').value)||0);
+ t.open=true;t.start=Date.now();t.orders=[];
+ save();closeM();toast('Masa '+id+' açıldı • '+money(t.rate)+'/saat');
+}
+function editTableRate(id){
+ let t=db.tables.find(x=>x.id===id);
+ openM(`<h2>Masa ${id} Ücret Ayarı</h2>
+ <div class="field"><label>Saatlik ücret (TL)</label><input id="editRate" type="number" min="0" step="1" value="${Number(t.rate)||0}"></div>
+ <div class="field"><label>Otomatik kapanma (dakika)</label><input id="editLimit" type="number" min="0" step="5" value="${Number(t.limitMinutes)||0}"></div>
+ <p class="muted">Açık masada değişiklik yeni ücreti bundan sonraki hesaplamalara uygular.</p>
+ <div class="actions"><button class="primary" onclick="applyTableRate(${id})">Kaydet</button><button class="dark" onclick="closeM()">İptal</button></div>`)
+}
+function applyTableRate(id){
+ let t=db.tables.find(x=>x.id===id);
+ t.rate=Math.max(0,Number($('editRate').value)||0);
+ t.limitMinutes=Math.max(0,Number($('editLimit').value)||0);
+ save();closeM();toast('Masa '+id+' ücreti '+money(t.rate)+'/saat oldu');
+}
+function closeTable(id){let t=db.tables.find(x=>x.id===id),x=tableCalc(t);openM(`<h2>Masa ${id}</h2><p>Masa ücreti: <b>${money(x.fee)}</b></p><p>Adisyon: <b>${money(x.orders)}</b></p><h2>Toplam ${money(x.total)}</h2><div class="actions"><button class="green" onclick="payTable(${id},'Nakit')">Nakit</button><button class="green" onclick="payTable(${id},'Kart')">Kart</button><button class="dark" onclick="closeM()">İptal</button></div>`)}
+function payTable(id,method){let t=db.tables.find(x=>x.id===id),x=tableCalc(t);db.cash.push({id:Date.now(),type:'Satış',desc:'Masa '+id+' / '+method,amount:x.total,time:Date.now()});t.open=false;t.start=null;t.orders=[];save();openM(`<h2 class="positive">✓ Ödeme Başarılı</h2><h1>${money(x.total)}</h1><p>Masa ${id} kapandı • ${method}</p><button class="primary" onclick="closeM()">Kapat</button>`)}
+function newOrder(){let opts=db.products.map(p=>`<option value="${p.id}">${p.n} — ${money(p.sell)} / stok ${p.stock}</option>`).join('');openM(`<h2>Garson Siparişi</h2><div class="grid2"><div class="field"><label>Masa</label><select id="ot">${db.tables.map(t=>`<option value="${t.id}">Masa ${t.id}</option>`).join('')}</select></div><div class="field"><label>Ürün</label><select id="op">${opts}</select></div></div><div class="field"><label>Adet</label><input id="oq" type="number" min="1" value="1"></div><div class="field"><label>Not</label><textarea id="onote" placeholder="Örn. soğansız"></textarea></div><div class="actions"><button class="primary" onclick="addOrder('Garson')">Siparişi Kaydet</button><button class="dark" onclick="closeM()">İptal</button></div>`)}
+function addOrder(source){let tid=+$('ot').value,pid=+$('op').value,q=Math.max(1,+$('oq').value||1),p=db.products.find(x=>x.id===pid),t=db.tables.find(x=>x.id===tid);if(p.stock<q)return alert('Stok yetersiz');if(!t.open){t.open=true;t.start=Date.now();t.orders=[]}p.stock-=q;let o={id:Date.now(),table:tid,source,time:Date.now(),items:[{pid,qty:q}],total:p.sell*q,status:'Yeni',note:$('onote').value||''};db.orders.push(o);t.orders.push(o.id);save();closeM();toast('Sipariş mutfağa gönderildi')}
+function kitchenStatus(id,status){let o=db.orders.find(x=>x.id===id);if(o){o.status=status;save();toast('Sipariş '+status)}}
+function renderQR(){let tid=+$('qrTable').value;$('menu').innerHTML=db.products.map(p=>`<div class="product"><h3>${p.n}</h3><div class="price">${money(p.sell)}</div><p class="muted">${p.cat}</p><div class="${p.stock?'positive':'negative'}">${p.stock?'Stok '+p.stock:'Tükendi'}</div><button class="primary" style="width:100%;margin-top:8px" ${p.stock?'':'disabled'} onclick="cartAdd(${p.id})">Sepete Ekle</button></div>`).join('');let n=db.cart.reduce((s,x)=>s+x.qty,0),t=db.cart.reduce((s,x)=>s+(db.products.find(p=>p.id===x.pid)?.sell||0)*x.qty,0);$('cartCount').textContent=n+' ürün';$('cartTotal').textContent=money(t)}
+function cartAdd(pid){let x=db.cart.find(x=>x.pid===pid);x?x.qty++:db.cart.push({pid,qty:1});renderQR()}function clearCart(){db.cart=[];save()}
+function sendQR(){let tid=+$('qrTable').value,t=db.tables.find(x=>x.id===tid);if(!db.cart.length)return alert('Sepet boş');for(let x of db.cart){let p=db.products.find(p=>p.id===x.pid);if(p.stock<x.qty)return alert('Stok yetersiz')}if(!t.open){t.open=true;t.start=Date.now();t.orders=[]}let total=0,items=[];db.cart.forEach(x=>{let p=db.products.find(p=>p.id===x.pid);p.stock-=x.qty;total+=p.sell*x.qty;items.push(x)});let o={id:Date.now(),table:tid,source:'QR',time:Date.now(),items,total,status:'Yeni',note:''};db.orders.push(o);t.orders.push(o.id);db.cart=[];save();toast('QR siparişi yönetici ve mutfak ekranına düştü')}
+function newPS(){openM(`<h2>PS Oturumu Başlat</h2><div class="grid2"><div class="field"><label>Cihaz</label><select id="dev">${db.devices.map(d=>`<option value="${d.id}">PS ${d.id} ${d.open?'(Açık)':''}</option>`).join('')}</select></div><div class="field"><label>Müşteri</label><input id="pscust" placeholder="İsim"></div></div><div class="actions"><button class="primary" onclick="startPS()">Başlat</button><button class="dark" onclick="closeM()">İptal</button></div>`)}
+function startPS(){let d=db.devices.find(x=>x.id===+$('dev').value);if(d.open)return alert('Bu cihaz zaten açık');d.open=true;d.start=Date.now();d.customer=$('pscust').value||'Misafir';save();closeM();toast(d.name+' başlatıldı')}
+function stopPS(id){let d=db.devices.find(x=>x.id===id),fee=hours(d.start)*db.psRate;openM(`<h2>${d.name} Kapanışı</h2><p>Müşteri: ${d.customer}</p><p>Süre: ${(hours(d.start)).toFixed(2)} saat</p><h2>${money(fee)}</h2><div class="actions"><button class="green" onclick="finishPS(${id},'Nakit')">Nakit</button><button class="green" onclick="finishPS(${id},'Kart')">Kart</button></div>`)}
+function finishPS(id,method){let d=db.devices.find(x=>x.id===id),fee=hours(d.start)*db.psRate;db.cash.push({id:Date.now(),type:'PS Satış',desc:d.name+' / '+method,amount:fee,time:Date.now()});d.open=false;d.start=null;d.customer='';save();closeM();toast('PS oturumu kapandı')}
+function newProduct(){openM(`<h2>Ürün Ekle</h2><div class="grid2"><div class="field"><label>Ürün</label><input id="pn"></div><div class="field"><label>Kategori</label><input id="pc" value="İçecek"></div><div class="field"><label>Stok</label><input id="pst" type="number" value="20"></div><div class="field"><label>Kritik</label><input id="pk" type="number" value="5"></div><div class="field"><label>Alış</label><input id="pb" type="number" value="10"></div><div class="field"><label>Satış</label><input id="pv" type="number" value="25"></div></div><div class="actions"><button class="primary" onclick="addProduct()">Kaydet</button></div>`)}
+function addProduct(){db.products.push({id:Date.now(),n:$('pn').value||'Yeni Ürün',cat:$('pc').value,buy:+$('pb').value,sell:+$('pv').value,stock:+$('pst').value,critical:+$('pk').value});save();closeM();toast('Ürün eklendi')}
+function stockMove(id){let p=db.products.find(x=>x.id===id);openM(`<h2>Stok İşlemi • ${p.n}</h2><div class="grid2"><div class="field"><label>İşlem</label><select id="sm"><option value="in">Stok Girişi</option><option value="out">Stok Çıkışı</option></select></div><div class="field"><label>Miktar</label><input id="sq" type="number" value="1"></div></div><div class="actions"><button class="primary" onclick="doStock(${id})">Uygula</button></div>`)}
+function doStock(id){let p=db.products.find(x=>x.id===id),q=Math.max(1,+$('sq').value||1);if($('sm').value==='in')p.stock+=q;else p.stock=Math.max(0,p.stock-q);save();closeM();toast('Stok güncellendi')}
+function newCustomer(){openM(`<h2>Müşteri</h2><div class="grid2"><div class="field"><label>Ad</label><input id="cn"></div><div class="field"><label>Telefon</label><input id="cp"></div><div class="field"><label>VIP</label><select id="cv"><option value="false">Hayır</option><option value="true">Evet</option></select></div></div><div class="actions"><button class="primary" onclick="addCustomer()">Kaydet</button></div>`)}
+function addCustomer(){db.customers.push({id:Date.now(),name:$('cn').value||'Misafir',phone:$('cp').value,vip:$('cv').value==='true',visits:0,points:0,discount:0});save();closeM();toast('Müşteri eklendi')}
+function loyalty(id){let c=db.customers.find(x=>x.id===id);c.visits++;c.points+=10;c.discount=c.visits>=30?20:c.visits>=20?15:c.visits>=10?10:c.visits>=5?5:0;save();toast('Ziyaret ve puan eklendi')}
+function cashMove(type){openM(`<h2>Kasa ${type}</h2><div class="field"><label>Tutar</label><input id="ca" type="number" min="0"></div><div class="field"><label>Açıklama</label><input id="cd" placeholder="Örn. malzeme"></div><button class="primary" onclick="addCash('${type}')">Kaydet</button>`)}
+function addCash(type){let amount=Math.abs(+$('ca').value||0)*(type==='Çıkış'?-1:1);db.cash.push({id:Date.now(),type,desc:$('cd').value||'-',amount,time:Date.now()});save();closeM();toast('Kasa hareketi kaydedildi')}
+function newStaff(){openM(`<h2>Personel</h2><div class="grid2"><div class="field"><label>Ad</label><input id="sn"></div><div class="field"><label>Rol</label><select id="sr"><option>Garson</option><option>Kasa</option><option>Mutfak</option><option>Yönetici</option></select></div></div><button class="primary" onclick="addStaff()">Kaydet</button>`)}
+function addStaff(){db.staff.push({id:Date.now(),name:$('sn').value||'Personel',role:$('sr').value,active:true});save();closeM();toast('Personel eklendi')}
+function qrLinks(){openM('<h2>QR Masa Bağlantıları</h2>'+db.tables.map(t=>`<div class="card"><div class="row"><b>Masa ${t.id}</b><button class="primary" onclick="showOneQR(${t.id})">QR Gör</button></div></div>`).join(''))}
+function showOneQR(id){openM(`<div class="qrbox"><h2>GORİL • MASA ${id}</h2><div class="fakeqr">██░█ ███░ ░███ █░██ ░░██ ██░█ ███░ ░███<br>░███ ░░██ ███░ ████ ░██ ░███ ██░█</div><p>goril.local/menu?masa=${id}</p><button class="primary" onclick="closeM()">Kapat</button></div>`)}
+function downloadReport(){let rev=db.orders.reduce((s,o)=>s+o.total,0)+db.cash.filter(x=>x.type==='PS Satış').reduce((s,x)=>s+x.amount,0),txt=`GORİL PRO RAPOR\\nDönem: ${period}\\nSipariş: ${db.orders.length}\\nToplam satış: ${money(rev)}\\n`;let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain'}));a.download='goril-pro-rapor.txt';a.click()}
+function resetAll(){if(confirm('Tüm prototip verileri silinsin mi?')){localStorage.removeItem(KEY);location.reload()}}
+function render(){
+$('rateTop').value=db.rate;$('rateSet').value=db.rate;$('psRate').value=db.psRate;$('qrTable').innerHTML=db.tables.map(t=>`<option value="${t.id}">Masa ${t.id}</option>`).join('');
+let open=db.tables.filter(t=>t.open).length,psopen=db.devices.filter(d=>d.open).length,rev=db.orders.reduce((s,o)=>s+o.total,0),psrev=db.cash.filter(x=>x.type==='PS Satış').reduce((s,x)=>s+x.amount,0),low=db.products.filter(p=>p.stock<=p.critical);
+$('stats').innerHTML=[['Açık Masa',open],['PS Açık',psopen],['Sipariş',db.orders.length],['Ciro',money(rev+psrev)],['Kritik Stok',low.length]].map(x=>`<div class="card stat"><span class="muted">${x[0]}</span><b>${x[1]}</b></div>`).join('');
+let pendingQR=db.orders.filter(o=>o.source==='QR'&&o.status==='Yeni').length;
+$('dashAlerts').innerHTML=(low.length?`<div class="card warn">⚠️ Kritik stok: ${low.map(p=>p.n).join(', ')}</div>`:'')+
+(pendingQR?`<div class="card" style="border-color:#8d70ff">📱 <b>${pendingQR}</b> yeni QR siparişi yönetici ve mutfak ekranında bekliyor.</div>`:'');
+let tableHTML=db.tables.map(t=>{let x=tableCalc(t),m=Math.floor(elapsed(t.start)/60000);return `<div class="card"><div class="row"><b>Masa ${t.id}</b><span class="badge ${t.open?'ok':''}">${t.open?'AÇIK':'BOŞ'}</span></div><p class="muted">${t.open?'Süre '+Math.floor(m/60)+'s '+m%60+'dk':'Hazır'}</p><h2>${money(x.total)}</h2><div class="kpi">Saatlik ${money(t.rate||db.rate)} • Masa ${money(x.fee)} • Adisyon ${money(x.orders)}</div><div class="actions">${t.open?`<button class="dark" onclick="newOrder()">Sipariş</button><button class="purple" onclick="editTableRate(${t.id})">Ücreti Değiştir</button><button class="danger" onclick="closeTable(${t.id})">Kapat</button>`:`<button class="primary" onclick="openTable(${t.id})">Masa Aç</button><button class="dark" onclick="editTableRate(${t.id})">Saatlik Ücret</button>`}</div></div>`}).join('');$('dashTables').innerHTML=tableHTML;$('tablesGrid').innerHTML=tableHTML;
+$('psStats').innerHTML=[['Cihaz',db.devices.length],['Açık',psopen],['PS Cirosu',money(psrev)],['Saatlik',money(db.psRate)]].map(x=>`<div class="card stat"><span class="muted">${x[0]}</span><b>${x[1]}</b></div>`).join('');
+$('psGrid').innerHTML=db.devices.map(d=>`<div class="card"><div class="row"><b>${d.name}</b><span class="badge ${d.open?'ok':''}">${d.open?'AÇIK':'BOŞ'}</span></div><p class="muted">${d.open?d.customer:'Kullanıma hazır'}</p>${d.open?`<div class="timer">${(hours(d.start)).toFixed(2)} saat</div><h2>${money(hours(d.start)*db.psRate)}</h2><button class="danger" onclick="stopPS(${d.id})">Oturumu Bitir</button>`:`<button class="primary" onclick="newPS()">Başlat</button>`}</div>`).join('');
+$('kitchenList').innerHTML=db.orders.filter(o=>o.status!=='Teslim').slice().reverse().map(o=>`<div class="card"><div class="row"><b>Masa ${o.table} • ${o.source}</b><span class="badge ${o.status==='Yeni'?'newb':''}">${o.status}</span></div><p>${o.items.map(x=>{let p=db.products.find(p=>p.id===x.pid);return p?p.n+' × '+x.qty:''}).join(', ')}</p>${o.note?`<p class="warn">Not: ${o.note}</p>`:''}<div class="actions">${o.status==='Yeni'?`<button class="primary" onclick="kitchenStatus(${o.id},'Hazırlanıyor')">Hazırlanıyor</button>`:o.status==='Hazırlanıyor'?`<button class="green" onclick="kitchenStatus(${o.id},'Hazır')">Hazır</button>`:`<button class="green" onclick="kitchenStatus(${o.id},'Teslim')">Teslim</button>`}</div></div>`).join('')||'<div class="card muted">Bekleyen sipariş yok.</div>';
+$('ordersList').innerHTML=db.orders.slice().reverse().map(o=>`<div class="card"><div class="row"><b>Masa ${o.table} • ${o.source}</b><span class="badge">${o.status}</span></div><p>${o.items.map(x=>{let p=db.products.find(p=>p.id===x.pid);return p?p.n+' × '+x.qty:''}).join(', ')}</p><div class="row"><span class="muted">${new Date(o.time).toLocaleTimeString('tr-TR')}</span><b>${money(o.total)}</b></div></div>`).join('')||'<div class="card muted">Sipariş yok.</div>';
+$('stockList').innerHTML=db.products.map(p=>`<tr><td>${p.n}</td><td class="${p.stock<=p.critical?'negative':''}">${p.stock}</td><td>${p.critical}</td><td>${money(p.buy)}</td><td>${money(p.sell)}</td><td>${money(p.sell-p.buy)}</td><td><button class="dark" onclick="stockMove(${p.id})">Stok</button></td></tr>`).join('');
+$('customerList').innerHTML=db.customers.map(c=>`<tr><td>${c.name}</td><td>${c.phone||'-'}</td><td>${c.visits}</td><td>${c.points}</td><td>${c.vip?'✓':'-'}</td><td>%${c.discount}</td><td><button class="dark" onclick="loyalty(${c.id})">Ziyaret</button></td></tr>`).join('')||'<tr><td colspan="7">Müşteri yok.</td></tr>';
+let cashTotal=db.cash.reduce((s,x)=>s+x.amount,0),cashIn=db.cash.filter(x=>x.amount>0).reduce((s,x)=>s+x.amount,0),cashOut=-db.cash.filter(x=>x.amount<0).reduce((s,x)=>s+x.amount,0);
+$('cashStats').innerHTML=[['Kasa',money(cashTotal)],['Giriş',money(cashIn)],['Çıkış',money(cashOut)],['Hareket',db.cash.length],['PS Satış',money(psrev)]].map(x=>`<div class="card stat"><span class="muted">${x[0]}</span><b>${x[1]}</b></div>`).join('');
+$('cashList').innerHTML=db.cash.slice().reverse().map(x=>`<tr><td>${new Date(x.time).toLocaleTimeString('tr-TR')}</td><td>${x.type}</td><td>${x.desc}</td><td class="${x.amount<0?'negative':'positive'}">${money(x.amount)}</td></tr>`).join('');
+let allSales=rev+psrev,profit=db.orders.reduce((s,o)=>s+o.items.reduce((a,x)=>{let p=db.products.find(p=>p.id===x.pid);return a+(p?(p.sell-p.buy)*x.qty:0)},0),0);
+$('reportStats').innerHTML=[['Toplam Satış',money(allSales)],['Ürün Kârı',money(profit)],['PS Geliri',money(psrev)],['Sipariş',db.orders.length],['Açık Masa',open]].map(x=>`<div class="card stat"><span class="muted">${x[0]}</span><b>${x[1]}</b></div>`).join('');
+let nak=db.cash.filter(x=>x.desc.includes('/ Nakit')).reduce((s,x)=>s+x.amount,0),kart=db.cash.filter(x=>x.desc.includes('/ Kart')).reduce((s,x)=>s+x.amount,0);
+$('paymentReport').innerHTML=`<p>Nakit: <b>${money(nak)}</b></p><p>Kart: <b>${money(kart)}</b></p><p>Diğer kasa hareketleri: <b>${money(cashTotal-nak-kart)}</b></p>`;
+let count={};db.orders.forEach(o=>o.items.forEach(x=>{let p=db.products.find(p=>p.id===x.pid);if(p)count[p.n]=(count[p.n]||0)+x.qty}));$('bestReport').innerHTML=Object.entries(count).sort((a,b)=>b[1]-a[1]).slice(0,5).map(x=>`<p>${x[0]} <b>×${x[1]}</b></p>`).join('')||'<p class="muted">Henüz satış yok.</p>';
+$('periodText').textContent=period+' görünümü aktif.';
+$('staffList').innerHTML=db.staff.map(s=>`<tr><td>${s.name}</td><td>${s.role}</td><td><span class="badge ${s.active?'ok':''}">${s.active?'Aktif':'Pasif'}</span></td></tr>`).join('');
+renderQR();
+}
+function backgroundChecks(){
+ db.tables.forEach(t=>{
+   if(t.open && t.limitMinutes>0 && elapsed(t.start)>=t.limitMinutes*60000){
+     let x=tableCalc(t);
+     db.cash.push({id:Date.now()+t.id,type:'Otomatik Masa Kapanışı',desc:'Masa '+t.id,amount:x.total,time:Date.now()});
+     t.open=false;t.start=null;t.orders=[];t.limitMinutes=0;
+     toast('Masa '+t.id+' süresi doldu ve otomatik kapandı');
+   }
+ });
+ let low=db.products.filter(p=>p.stock<=p.critical);
+ if(low.length && !window._lastLow){window._lastLow=low.map(p=>p.id).join(',');toast('⚠️ Kritik stok: '+low.map(p=>p.n).join(', '));}
+ if(!low.length)window._lastLow='';
+}
+setInterval(()=>{backgroundChecks();render()},1000);render();
+</script><section id="page-operations" class="page" style="display:none">
+<h1>🧩 Operasyon Merkezi</h1>
+<p>Personel, vardiya, mola, rezervasyon, masa atama ve işlem geçmişi.</p>
+<div class="v3tabs">
+<button onclick="v3show('ov',this)">Genel</button><button onclick="v3show('shift',this)">Vardiyalar</button>
+<button onclick="v3show('staff',this)">Personel</button><button onclick="v3show('res',this)">Rezervasyon</button>
+<button onclick="v3show('hist',this)">İşlem Geçmişi</button>
+</div>
+<div id="v3-ov"></div><div id="v3-shift" style="display:none"></div><div id="v3-staff" style="display:none"></div>
+<div id="v3-res" style="display:none"></div><div id="v3-hist" style="display:none"></div>
+</section><script>
+(function(){
+const K='goril_ops_v3';
+let d=JSON.parse(localStorage.getItem(K)||'null')||{staff:[],shifts:[],reservations:[],events:[],assign:{}};
+const save=()=>localStorage.setItem(K,JSON.stringify(d)), now=()=>Date.now();
+const esc=x=>String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const log=(type,msg)=>{d.events.unshift({time:now(),type,msg});d.events=d.events.slice(0,500);save()};
+if(!d.staff.length)d.staff=[
+{id:1,name:'Mehmet',role:'Garson',user:'garson01',active:true,status:'off'},
+{id:2,name:'Ahmet',role:'Kasa',user:'kasa01',active:true,status:'off'},
+{id:3,name:'Murat',role:'Mutfak',user:'mutfak01',active:true,status:'off'}]; save();
+
+window.v3show=function(n,b){['ov','shift','staff','res','hist'].forEach(x=>document.getElementById('v3-'+x).style.display=x===n?'block':'none');document.querySelectorAll('.v3tabs button').forEach(x=>x.classList.remove('active'));if(b)b.classList.add('active');v3render()};
+window.v3NewStaff=function(){openM(`<h2>Yeni Personel</h2><div class="grid2">
+<div class="field"><label>Ad Soyad</label><input id="v3name"></div>
+<div class="field"><label>Rol</label><select id="v3role"><option>Garson</option><option>Kasa</option><option>Mutfak</option></select></div>
+<div class="field"><label>Kullanıcı adı</label><input id="v3user"></div>
+<div class="field"><label>Şifre</label><input id="v3pass" type="password"></div></div>
+<div class="actions"><button class="primary" onclick="v3AddStaff()">Oluştur</button><button class="dark" onclick="closeM()">İptal</button></div>`)};
+window.v3AddStaff=function(){let s={id:now(),name:$('v3name').value,role:$('v3role').value,user:$('v3user').value,active:true,status:'off'};if(!s.name||!s.user)return toast('Ad ve kullanıcı adı gerekli');d.staff.push(s);log('Personel','Yeni personel: '+s.name);closeM();v3render()};
+window.v3Shift=function(id,a){let s=d.staff.find(x=>x.id===id);if(!s)return;
+if(a==='in'){s.status='active';d.shifts.push({staff:id,in:now(),out:null,breaks:[]});log('Mesai',s.name+' mesaiye başladı')}
+if(a==='break'){if(Object.values(d.assign).filter(x=>x===id).length)return v3Break(id);s.status='break';let sh=[...d.shifts].reverse().find(x=>x.staff===id&&!x.out);if(sh)sh.breaks.push({in:now(),out:null});log('Mola',s.name+' molaya çıktı')}
+if(a==='back'){let sh=[...d.shifts].reverse().find(x=>x.staff===id&&!x.out);if(sh){let b=sh.breaks.find(x=>!x.out);if(b)b.out=now()}s.status='active';log('Mola',s.name+' moladan döndü')}
+if(a==='out'){let sh=[...d.shifts].reverse().find(x=>x.staff===id&&!x.out);if(sh){sh.out=now();sh.breaks.forEach(b=>{if(!b.out)b.out=now()})}s.status='off';log('Mesai',s.name+' mesaisi bitti')}save();v3render()};
+function v3Break(id){let tables=Object.keys(d.assign).filter(t=>d.assign[t]===id);openM(`<h2>☕ Mola</h2><p>Üzerinizde ${tables.length} aktif masa var: ${tables.join(', ')}.</p><p>Masalar uygun garsonlara devredilsin mi?</p><div class="actions"><button class="primary" onclick="v3Transfer(${id})">Devret ve Molaya Çık</button><button class="dark" onclick="closeM()">İptal</button></div>`)};
+window.v3Transfer=function(id){Object.keys(d.assign).filter(t=>d.assign[t]===id).forEach(t=>{delete d.assign[t];v3Assign(t)});closeM();v3Shift(id,'break')};
+window.v3Assign=function(table){let gs=d.staff.filter(s=>s.role==='Garson'&&s.active&&s.status==='active');if(!gs.length)return null;gs.sort((a,b)=>Object.values(d.assign).filter(x=>x===a.id).length-Object.values(d.assign).filter(x=>x===b.id).length);let s=gs[0];d.assign[table]=s.id;log('Masa Atama','Masa '+table+' → '+s.name);save();v3render();return s};
+window.v3Release=function(table){delete d.assign[table];log('Masa Atama','Masa '+table+' ataması kaldırıldı');save();v3render()};
+window.v3Res=function(){openM(`<h2>Rezervasyon</h2><div class="grid2"><div class="field"><label>Müşteri</label><input id="rn"></div><div class="field"><label>Telefon</label><input id="rt"></div><div class="field"><label>Masa</label><input id="rm" type="number"></div><div class="field"><label>Tarih/Saat</label><input id="rd" type="datetime-local"></div></div><div class="actions"><button class="primary" onclick="v3AddRes()">Kaydet</button></div>`)};
+window.v3AddRes=function(){d.reservations=d.reservations||[];d.reservations.push({id:now(),name:$('rn').value,phone:$('rt').value,table:$('rm').value,date:$('rd').value,status:'Bekliyor'});log('Rezervasyon','Yeni rezervasyon');closeM();v3render()};
+function dur(ms){let m=Math.floor(ms/60000),h=Math.floor(m/60);return h+'s '+m%60+'dk'}
+function v3render(){
+let active=d.staff.filter(s=>s.status==='active').length,br=d.staff.filter(s=>s.status==='break').length;
+$('v3-ov').innerHTML=`<div class="v3grid"><div class="v3card">🟢 Aktif personel<b>${active}</b></div><div class="v3card">☕ Molada<b>${br}</b></div><div class="v3card">🪑 Atanmış masa<b>${Object.keys(d.assign).length}</b></div><div class="v3card">📅 Rezervasyon<b>${(d.reservations||[]).filter(x=>x.status==='Bekliyor').length}</b></div></div>`;
+$('v3-staff').innerHTML=`<button class="primary" onclick="v3NewStaff()">+ Personel Hesabı</button><div class="v3list">`+d.staff.map(s=>`<div class="v3row"><span><b>${esc(s.name)}</b><br>${esc(s.role)} · ${esc(s.user)} · ${esc(s.status)}</span><span>${s.role==='Garson'?(s.status==='off'?`<button class="primary" onclick="v3Shift(${s.id},'in')">Mesai Başlat</button>`:s.status==='active'?`<button class="dark" onclick="v3Shift(${s.id},'break')">☕ Mola</button><button class="danger" onclick="v3Shift(${s.id},'out')">Çıkış</button>`:`<button class="primary" onclick="v3Shift(${s.id},'back')">Moladan Dön</button>`):''}</span></div>`).join('')+'</div>';
+$('v3-shift').innerHTML='<div class="v3list">'+d.shifts.slice().reverse().map(x=>{let s=d.staff.find(y=>y.id===x.staff)||{};let gross=(x.out||now())-x.in,br=x.breaks.reduce((a,b)=>a+((b.out||now())-b.in),0);return `<div class="v3row"><span><b>${esc(s.name)}</b><br>${new Date(x.in).toLocaleString('tr-TR')}</span><span>Net ${dur(gross-br)}<br>Mola ${dur(br)}</span></div>`}).join('')+'</div>';
+$('v3-res').innerHTML=`<button class="primary" onclick="v3Res()">+ Rezervasyon</button><div class="v3list">${(d.reservations||[]).map(r=>`<div class="v3row"><span><b>Masa ${r.table} · ${esc(r.name)}</b><br>${esc(r.date)} · ${esc(r.phone)}</span><span>${r.status}</span></div>`).join('')}</div>`;
+$('v3-hist').innerHTML='<div class="v3list">'+d.events.map(e=>`<div class="v3row"><span><b>${esc(e.type)}</b> · ${esc(e.msg)}</span><small>${new Date(e.time).toLocaleString('tr-TR')}</small></div>`).join('')+'</div>';
+}
+window.GORIL_V3={assignTable:v3Assign,releaseTable:v3Release,data:()=>d};v3render();setInterval(v3render,2000);
+})();
+</script></body></html>
